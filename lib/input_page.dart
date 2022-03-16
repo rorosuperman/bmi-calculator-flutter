@@ -5,6 +5,8 @@ import 'iconData.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'constants.dart';
 import 'results.dart';
+import 'bottombutton.dart';
+import 'package:bmi_calculator/CalculatorBrain.dart';
 
 enum GenderValue {
   male,
@@ -217,31 +219,22 @@ class _InputPageState extends State<InputPage> {
               ],
             ),
           ),
-          GestureDetector(
-            onTap: () {
+          bottomButton(
+            ontap: () {
+              CalculatorBrain calc =
+                  CalculatorBrain(weight: weight, height: height);
               Navigator.push(
                 context,
-                CupertinoPageRoute(builder: (context) => Resultpage()),
+                CupertinoPageRoute(
+                  builder: (context) => Resultpage(
+                    BMInumber: calc.bmiCalculator(),
+                    BMIword: calc.getresults(),
+                    BMIfeedback: calc.getfeedback(),
+                  ),
+                ),
               );
             },
-            child: Container(
-              alignment: Alignment.center,
-              // decoration: BoxDecoration(
-              //   borderRadius: BorderRadius.circular(10.0),
-              color: Color(0xFF54BAB9),
-              // ),
-              // child: Padding(
-              //     padding: EdgeInsets.all(12),
-              child: Text(
-                "Calculate My BMI",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    fontFamily: 'Poppins', color: Colors.white, fontSize: 18),
-              ),
-              margin: EdgeInsets.only(top: 12.0),
-              width: double.infinity,
-              height: 50.0,
-            ),
+            lable: "Calculate my BMI",
           )
         ],
       ),
